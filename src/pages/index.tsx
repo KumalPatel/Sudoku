@@ -11,6 +11,7 @@ export default function Home() {
     const [difficulty, setDifficulty] = useState('medium')
     const [gameData, setGameData] = useState(null)
     const [solved, setSolved] = useState(false)
+    const [isSolving, setIsSolving] = useState(false)
     const interval: { current: NodeJS.Timeout | null } = useRef(null)
     const API_URL = `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`
 
@@ -35,6 +36,7 @@ export default function Home() {
                 const data = await result.json()
                 const formattedData = formatGameData(data.board)
                 setGameData(formattedData)
+                setIsSolving(false)
             }
         })()
     }, [difficulty, solved])
@@ -70,7 +72,7 @@ export default function Home() {
             <main>
                 <div className='bg-gradient-to-b from-black  to-gray-500  min-h-screen pt-20'>
                     <motion.h1
-                        className='flex flex-col items-center justify-center p-12 text-5xl  text-white'
+                        className='flex flex-col items-center justify-center p-12 text-5xl text-white'
                         variants={HeaderVariants}
                         initial='initial'
                         animate='animate'>
@@ -81,7 +83,7 @@ export default function Home() {
                         variants={ContainerVariants}
                         initial='initial'
                         animate='animate'>
-                        <div className='grid justify-center '>
+                        <div className='grid justify-center'>
                             <Timer
                                 difficulty={difficulty}
                                 interval={interval}
@@ -91,6 +93,7 @@ export default function Home() {
                                 difficulty={difficulty}
                                 setDifficulty={setDifficulty}
                                 setSolved={setSolved}
+                                isSolving={isSolving}
                             />
                         </div>
                         <SudokuBoard
@@ -102,6 +105,8 @@ export default function Home() {
                             setGameData={setGameData}
                             solved={solved}
                             setSolved={setSolved}
+                            isSolving={isSolving}
+                            setIsSolving={setIsSolving}
                             interval={interval}
                         />
                     </motion.div>

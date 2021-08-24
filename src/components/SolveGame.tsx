@@ -7,12 +7,16 @@ const SolveGame = ({
     setGameData,
     solved,
     setSolved,
+    isSolving,
+    setIsSolving,
     interval
 }: {
     gameData: Game[][]
     setGameData: Dispatch<SetStateAction<Game[][]>>
     solved: boolean
     setSolved: Dispatch<SetStateAction<boolean>>
+    isSolving: boolean
+    setIsSolving: Dispatch<SetStateAction<boolean>>
     interval: { current: NodeJS.Timeout | null }
 }) => {
     const [button, setButton] = useState('Solve Game!')
@@ -23,6 +27,10 @@ const SolveGame = ({
             clearInterval(interval.current)
         } else setButton('Solve Game!')
     }, [solved])
+
+    useEffect(() => {
+       console.log(isSolving)
+    },[isSolving])
 
     const sleep = (ms: number): Promise<NodeJS.Timeout> => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -36,11 +44,12 @@ const SolveGame = ({
         }
     }
 
-    const clearBoard = (gameData: Game[][]): Game[][] => {
-        return gameData.map((row: Game[]) => row.map((element: Game) => {
+    const clearBoard = (gameData: Game[][]): void => {
+        const data = gameData.map((row: Game[]) => row.map((element: Game) => {
             if (element.editable) element.value = 0
             return element
         }))
+        setGameData(data)
     }
 
     const backTrackSolve = async () => {
@@ -68,12 +77,15 @@ const SolveGame = ({
             <button
                 className='w-80 py-2 px-4 bg-black text-white text-center rounded-lg transform transition hover:scale-110 hover:bg-opacity-80 active:translate-y-0.5 active:bg-opacity-80'
                 onClick={async () => {
-                    if(!solved) {
-                        const data = clearBoard(gameData)
-                        setGameData(data)
+                    if(!isSolving && !solved) {
+                        clearBoard(gameData)
+                        setIsSolving(true)
                         await backTrackSolve()
                     }
-                    setSolved(!solved)
+                    else if(!isSolving){
+                        setSolved(!solved)
+                        setIsSolving(false)
+                    }
                 }}>
                 {button}
             </button>
