@@ -28,10 +28,6 @@ const SolveGame = ({
         } else setButton('Solve Game!')
     }, [solved])
 
-    useEffect(() => {
-       console.log(isSolving)
-    },[isSolving])
-
     const sleep = (ms: number): Promise<NodeJS.Timeout> => new Promise(resolve => setTimeout(resolve, ms))
 
     const findEmpty = (gameData: Game[][]): { row: number, col: number } => {
@@ -82,7 +78,7 @@ const SolveGame = ({
                         setIsSolving(true)
                         await backTrackSolve()
                     }
-                    else if(!isSolving){
+                    if(!isSolving){
                         setSolved(!solved)
                         setIsSolving(false)
                     }
