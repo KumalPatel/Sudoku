@@ -31,7 +31,7 @@ const Difficulty = ({
         <div>
             {difficulties.map((difficulties: string, index: number) => (
                 <input
-                    className={`transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mx-4 px-0.5 bg-transparent cursor-pointer capitalize text-xl ${difficultyBorder(difficulty, difficulties)}`}
+                    className={`transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 focus:outline-none mx-4 px-0.5 bg-transparent cursor-pointer capitalize text-xl ${difficultyBorder(difficulty, difficulties)}`}
                     type='button'
                     key={index}
                     value={difficulties}

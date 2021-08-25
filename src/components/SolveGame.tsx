@@ -71,7 +71,7 @@ const SolveGame = ({
     return (
         <div className='flex items-center justify-center text-lg py-6 pb-4'>
             <button
-                className='w-80 py-2 px-4 bg-black text-white text-center rounded-lg transform transition hover:scale-110 hover:bg-opacity-80 active:translate-y-0.5 active:bg-opacity-80'
+                className='w-80 py-2 px-4 bg-black text-white text-center rounded-lg transform transition hover:scale-110 hover:bg-opacity-80 focus:outline-none active:translate-y-0.5 active:bg-opacity-80'
                 onClick={async () => {
                     if(!isSolving && !solved) {
                         clearBoard(gameData)
